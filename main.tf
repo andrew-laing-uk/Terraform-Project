@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = var.bucket_name
+    bucket = "am-terraform-project-bucket"
     key    = "terraform.tfstate"
-    region = var.region
+    region = "eu-west-2"
   }
 
   required_providers {
