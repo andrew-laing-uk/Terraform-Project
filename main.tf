@@ -19,7 +19,7 @@ provider "aws" {
 }
 # Configure the ECR ressource
 resource "aws_ecr_repository" "app_repo" {
-  name                 = "task-listing-app"
+  name                 = "am-task-listing-app"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration {
     scan_on_push = true
