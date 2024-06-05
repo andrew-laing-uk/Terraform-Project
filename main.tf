@@ -47,7 +47,8 @@ resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
   for_each = toset([
     "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier",
     "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker",
-    "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
+    "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   ])
 
   role       = aws_iam_role.am-role-elb.name
