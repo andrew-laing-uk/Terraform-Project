@@ -72,4 +72,10 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
     name      = "IamInstanceProfile"
     value     = aws_iam_instance_profile.am_eb_app_ec2_instance_profile.name
   }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "Name"
+    value     = "am-terraform-keypair"
+  }
 }
