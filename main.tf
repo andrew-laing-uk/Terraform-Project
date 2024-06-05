@@ -31,6 +31,10 @@ resource "aws_elastic_beanstalk_application" "am_eb_app" {
   description = "Task listing app"
 }
 
+resource "aws_iam_instance_profile" "am_eb_app_ec2_instance_profile" {
+  name = "am_eb_app_ec2_instance_name"
+}
+
 resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
   name        = "am-task-listing-app-environment"
   application = aws_elastic_beanstalk_application.am_eb_app.name
@@ -40,4 +44,11 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
   # https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html#platforms-supported.docker
   solution_stack_name = "64bit Amazon Linux 2023 v4.3.2 running Docker"
 
+
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.am_eb_app_ec2_instance_profile.name
+  }
 }
