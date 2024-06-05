@@ -48,4 +48,4 @@ jobs:
 
     # Apply the changes accordingly within the given provider
     - name: Terraform Apply
-      run: terraform apply
+      run: terraform apply -auto-approve
