@@ -43,6 +43,17 @@ resource "aws_iam_role" "am-role-elb" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
+  for_each = toset([
+    "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier",
+    "arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker",
+    "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
+  ])
+
+  role       = aws_iam_role.am-role-elb.name
+  policy_arn = each.value
+}
+
 resource "aws_iam_instance_profile" "am_eb_app_ec2_instance_profile" {
   name = "am_eb_app_ec2_instance_name"
   role = aws_iam_role.am-role-elb.name
