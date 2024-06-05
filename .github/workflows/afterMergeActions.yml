@@ -1,7 +1,5 @@
 # This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
-# with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
-# `terraform init`, `terraform fmt`, and `terraform plan`
-#
+# with an API token for Terraform Cloud (app.terraform.io). Applies changes.
 
 
 name: 'afterMergeActions'
