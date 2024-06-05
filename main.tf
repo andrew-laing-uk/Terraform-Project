@@ -75,7 +75,7 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
-    name      = "Name"
+    name      = "EC2KeyName"
     value     = "am-terraform-keypair"
   }
 }
