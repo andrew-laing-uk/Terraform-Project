@@ -26,14 +26,35 @@ resource "aws_ecr_repository" "app_repo" {
   }
 }
 
+resource "aws_iam_role" "am-role-elb" {
+  name = "am-role-elb-name"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_instance_profile" "am_eb_app_ec2_instance_profile" {
+  name = "am_eb_app_ec2_instance_name"
+  role = aws_iam_role.am-role-elb.name
+}
+
+
 resource "aws_elastic_beanstalk_application" "am_eb_app" {
   name        = "am-task-listing-app"
   description = "Task listing app"
 }
 
-resource "aws_iam_instance_profile" "am_eb_app_ec2_instance_profile" {
-  name = "am_eb_app_ec2_instance_name"
-}
+
 
 resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
   name        = "am-task-listing-app-environment"
