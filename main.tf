@@ -90,7 +90,7 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
 
 # Configure the S3 Bucket
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "am-terraform-s3-bucket"
+  bucket = "am-docker-image-s3-bucket"
 
   tags = {
     Name = "MyS3Bucket"
