@@ -96,3 +96,17 @@ resource "aws_s3_bucket" "my_bucket" {
     Name = "MyS3Bucket"
   }
 }
+
+# Configure Relational Database Service (RDS)
+resource "aws_db_instance" "rds_app" {
+  allocated_storage   = 10
+  engine              = "postgres"
+  engine_version      = "16.3"
+  instance_class      = "db.t3.micro"
+  identifier          = "am-task-listing-app-prod"
+  db_name             = "am_task_listing_app_db"
+  username            = "root"
+  password            = var.db_password
+  skip_final_snapshot = true
+  publicly_accessible = true
+}
