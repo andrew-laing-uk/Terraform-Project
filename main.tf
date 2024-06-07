@@ -103,18 +103,6 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
 
   setting {
     namespace = "aws:rds:dbinstance"
-    name      = "identifier"
-    value     = "am-task-listing-app-prod"
-  }
-
-  setting {
-    namespace = "aws:rds:dbinstance"
-    name      = "db_name"
-    value     = "am_task_listing_app_db"
-  }
-
-  setting {
-    namespace = "aws:rds:dbinstance"
     name      = "DBPassword"
     value     = var.db_password
   }
