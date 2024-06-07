@@ -62,6 +62,20 @@ resource "aws_iam_instance_profile" "am_eb_app_ec2_instance_profile" {
   role = aws_iam_role.am-role-elb.name
 }
 
+# Configure Relational Database Service (RDS)
+resource "aws_db_instance" "rds_app" {
+  allocated_storage   = 10
+  engine              = "postgres"
+  engine_version      = "16.3"
+  instance_class      = "db.t3.micro"
+  identifier          = "am-task-listing-app-prod"
+  db_name             = "am_task_listing_app_db"
+  username            = "root"
+  password            = var.db_password
+  skip_final_snapshot = true
+  publicly_accessible = true
+}
+
 # Configure Elastic Beanstalk Application
 resource "aws_elastic_beanstalk_application" "am_eb_app" {
   name        = "am-task-listing-app"
@@ -86,7 +100,33 @@ resource "aws_elastic_beanstalk_environment" "am_eb_app_environment" {
     name      = "EC2KeyName"
     value     = "am-terraform-keypair"
   }
+
+  setting {
+    namespace = "aws:rds:dbinstance"
+    name      = "identifier"
+    value     = "am-task-listing-app-prod"
+  }
+
+  setting {
+    namespace = "aws:rds:dbinstance"
+    name      = "db_name"
+    value     = "am_task_listing_app_db"
+  }
+
+  setting {
+    namespace = "aws:rds:dbinstance"
+    name      = "DBPassword"
+    value     = var.db_password
+  }
+
+  setting {
+    namespace = "aws:rds:dbinstance"
+    name      = "DBUser"
+    value     = "root"
+  }
 }
+
+
 
 # Configure the S3 Bucket
 resource "aws_s3_bucket" "my_bucket" {
@@ -95,18 +135,4 @@ resource "aws_s3_bucket" "my_bucket" {
   tags = {
     Name = "MyS3Bucket"
   }
-}
-
-# Configure Relational Database Service (RDS)
-resource "aws_db_instance" "rds_app" {
-  allocated_storage   = 10
-  engine              = "postgres"
-  engine_version      = "16.3"
-  instance_class      = "db.t3.micro"
-  identifier          = "am-task-listing-app-prod"
-  db_name             = "am_task_listing_app_db"
-  username            = "root"
-  password            = var.db_password
-  skip_final_snapshot = true
-  publicly_accessible = true
 }
